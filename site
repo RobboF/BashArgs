@@ -1,0 +1,52 @@
+#!/bin/bash
+
+shopt -s extglob
+ANY=?(-)?(-)
+
+function create() {
+
+  if [[ ${#@} > 1 ]];  then
+    echo "Too many arguments given"
+  else
+    echo "created" "$@"
+  fi
+}
+
+function delete() {
+
+  if [[ ${#@} > 2 ]];  then
+    echo "Too many argument: ${@:2}"
+  else
+    echo "deleted website" "$@"
+  fi
+
+  case "$1" in
+    ${ANY}r?(emove) )
+        shift
+        echo "deleted container" "$@"
+      ;;
+    *)
+
+      ;;
+
+  esac
+}
+
+# MAIN
+
+case "$1" in
+  ${ANY}c?(reate))
+      shift
+      create $@
+    ;;
+  ${ANY}d?(elete))
+      shift
+      delete $@
+    ;;
+
+  ${ANY}h?(elp))
+      echo "help created"
+    ;;
+  *)
+
+esac
